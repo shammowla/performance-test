@@ -97,22 +97,17 @@ services:
       # JENKINS_URL_CONFIG variable is used to set jenkins_url variable in jenkins global configuration.
       # This url will be used to create links to jenkins builds in grafana dashboards, default is http://127.0.0.1:8181/
       # Slash '/' should be escaped with '\' 
-      # - JENKINS_URL_CONFIG=http:\/\/127.0.0.1:8181\/
+      - JENKINS_URL_CONFIG=http:\/\/127.0.0.1:8181\/
       # JENKINS_GRAFANA_URL is used for generating link to grafana report in jenkins job description
       # default value is 127.0.0.1:8857
-      # - JENKINS_GRAFANA_URL=127.0.0.1:8857
+      - JENKINS_GRAFANA_URL=127.0.0.1:8857
       - JENKINS_ADMIN_LOGIN=admin
       - JENKINS_ADMIN_PASSWORD=admin
       volumes:
-        - /tmp/sitespeed.io/:/var/lib/sitespeed.io/
+        - ./sitespeed:/var/lib/sitespeed.io/
         - docker-dind:/usr/local/bin/dind/
         - /var/run/docker.sock:/var/run/docker.sock
         - jenkins-home:/var/jenkins_home
-        # if you want to run local tests uncomment line below and replace <jmeter-scenarios> on dir to your tests 
-        #- <path to local directory with tests>:/var/lib/jmeter-scenarios/
-        # you need to allow docker to access host drives
-        # https://blogs.msdn.microsoft.com/stevelasker/2016/06/14/configuring-docker-for-windows-volumes/
-        # currently tests will be fetched from ./jmeter/scenarios/ directory
         - ./jmeter/scenarios/:/var/lib/jmeter-scenarios/
         - ./wptserver/scripts/:/var/lib/wpt-scripts/
       restart: always

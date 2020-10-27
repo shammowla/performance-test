@@ -19,7 +19,7 @@ docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portaine
 # --browsertime.iterations - number of test iterations
 # URL - urls to test. To test multiple sites use space as a delimiter. Example https://google.com/
 # more documentation https://www.sitespeed.io/documentation/sitespeed.io/
-docker run --shm-size=1g --rm -v "/var/lib/sitespeed.io":/sitespeed.io sitespeedio/sitespeed.io --browsertime.browser chrome --browsertime.iterations 1 https://google.com/
+docker run --shm-size=1g --rm -v "$(pwd):/sitespeed.io" sitespeedio/sitespeed.io --browsertime.browser chrome --browsertime.iterations 1 https://google.com/
 _______
 graphite_network=$(docker inspect --format='{{.HostConfig.NetworkMode}}' graphite)
 docker run --network=$graphite_network --privileged=true --shm-size=1g --rm -v "/var/lib/sitespeed.io/":/sitespeed.io sitespeedio/sitespeed.io --graphite.host graphite --graphite.port 2003 --graphite.httpPort 80 --browsertime.browser $browser --browsertime.iterations $run_number https://$URL/
